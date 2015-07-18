@@ -21,7 +21,8 @@ int main(int argc, char* args[])
 int gameLoop()
 {
     SDL_StartTextInput();
-
+    Shader shader;
+    GLuint id = shader.loadFromFile("test.txt", GL_VERTEX_SHADER );
     while(gConfig->running)
     {
         /* ----- KEY HANDLING ----- */
@@ -156,7 +157,17 @@ int createGLContext()
     {
         printf( "OpenGL context could not be created! SDL Error: %s\n", SDL_GetError() );
         return ERROR;
-    }else return SUCCESS;
+    }/*else return SUCCESS;*/
+
+    glewExperimental= true;
+    GLenum err=glewInit();
+    if(err!=GLEW_OK)
+    {
+        //Problem: glewInit failed, something is seriously wrong.
+        cout<<"glewInit failed, aborting."<<endl;
+        return ERROR;
+    }
+    return SUCCESS;
 }
 
 int enableVsync()

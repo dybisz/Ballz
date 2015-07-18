@@ -1,6 +1,7 @@
 #ifndef __MAIN__
 #define __MAIN__
 
+#include <GL/glew.h>
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
@@ -15,6 +16,7 @@
 #include "gl_util.hpp"
 #include "config.hpp"
 #include "main_menu.hpp"
+#include "shader.hpp"
 
 #define WINDOW_NAME                     "BALLZ"
 #define GL_TARGET_VER_MAJOR             2
