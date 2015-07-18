@@ -1,7 +1,7 @@
 CC = g++
 L_FLAGS = -lSDL2 -lGL -lGLU -lGLEW # -lglut -lGLU -lm
 C_FLAGS = -Wall
-OBJ = main.o game.o main_menu.o gl_util.o shader.o
+OBJ = main.o ball.o shader.o shader_program.o game.o main_menu.o gl_util.o
 
 .PHONY: game clean
 
@@ -30,6 +30,14 @@ gl_util.o: gl_util.cpp
 shader.o: shader.cpp
 	@echo "----- COMPILING shader.o -----"
 	${CC} -o shader.o -c shader.cpp ${C_FLAGS}
+
+ball.o: ball.cpp
+	@echo "----- COMPILING ball.o -----"
+	${CC} -o ball.o -c ball.cpp ${C_FLAGS}
+
+shader_program.o: shader_program.cpp
+	@echo "----- COMPILING shader_program.o -----"
+	${CC} -o shader_program.o -c shader_program.cpp ${C_FLAGS}
 
 clean:
 	@echo "----- CLEAN -----"

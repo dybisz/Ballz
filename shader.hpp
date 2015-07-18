@@ -13,21 +13,18 @@ using namespace std;
 
 class Shader
 {
-public:
-    Shader();
-    ~Shader();
-
-    GLuint shaderID;
-    GLuint loadFromFile(string, GLenum);
-    GLuint createShader(GLenum);
-    void deleteShader();
 
 protected:
+    GLuint createShader(GLenum);
+    void deleteShader();
     void attachSource(GLuint,GLsizei, const GLchar**,const GLint*);
     void compile(GLuint, string);
     void printShaderLog(GLuint);
-    void getShaderParam(GLuint,GLenum,GLint*);
-    void getInfoLog(GLuint,  GLsizei, GLsizei*,  GLchar*);
+public:
+    GLuint shaderID;
+    GLuint loadFromFile(string, GLenum);
+    Shader();
+    ~Shader();
 };
 
 class CreateShdEx: public exception

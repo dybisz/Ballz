@@ -11,12 +11,13 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include "ball.hpp"
 #include "game.hpp"
 #include "error_const.hpp"
 #include "gl_util.hpp"
 #include "config.hpp"
 #include "main_menu.hpp"
-#include "shader.hpp"
+
 
 #define WINDOW_NAME                     "BALLZ"
 #define GL_TARGET_VER_MAJOR             2
@@ -49,8 +50,10 @@ SDL_GLContext gContext;
 
 /**
  * Holds base game flow information like screen width, screen height etc.
+ * Declared not as a pointer because all other globals are initialized after
+ * GLEW is triggered and this one is needed before it - during window initialization.
  */
-Config* gConfig = NULL;
+Config gConfig;
 
 /**
  * Holds all available states of the game. Useful when making handle input procedure
@@ -90,6 +93,11 @@ int initInstances();
  * Basic initialization of OpenGL environment. Nothing fancy here.
  */
 int initGL();
+
+/**
+ * Set GLEW to running and handle errors.
+ */
+int initGLEW();
 
 /**
  * Initialization of SDL.

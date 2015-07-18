@@ -1,0 +1,12 @@
+attribute vec3 aPosition;
+uniform mat4 uTranslation;
+uniform vec4 uColor;
+uniform mat4 uMvp;
+uniform mat4 uViewMatrix;
+varying vec4 vColor;
+
+void main(void)
+{
+    gl_Position = uMvp * uViewMatrix * uTranslation * vec4(aPosition, 1.0f);
+    vColor = uColor;
+}

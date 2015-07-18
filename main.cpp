@@ -7,11 +7,12 @@
 
 int main(int argc, char* args[])
 {
-    if(ERROR == initInstances())    return EXIT_FAILURE;
     if(ERROR == initSDL())          return EXIT_FAILURE;
     if(ERROR == createWindow())     return EXIT_FAILURE;
     if(ERROR == createGLContext())  return EXIT_FAILURE;
+    if(ERROR == initGLEW())         return EXIT_FAILURE;
     if(ERROR == enableVsync())      return EXIT_FAILURE;
+    if(ERROR == initInstances())    return EXIT_FAILURE;
     if(ERROR == initGL())           return EXIT_FAILURE;
     if(ERROR == gameLoop())         return EXIT_FAILURE;
     if(ERROR == cleanup())          return EXIT_FAILURE;
@@ -21,9 +22,7 @@ int main(int argc, char* args[])
 int gameLoop()
 {
     SDL_StartTextInput();
-    Shader shader;
-    GLuint id = shader.loadFromFile("test.txt", GL_VERTEX_SHADER );
-    while(gConfig->running)
+    while(gConfig.running)
     {
         /* ----- KEY HANDLING ----- */
         if(ERROR == handleStateInput()) return ERROR;
@@ -60,7 +59,7 @@ int handleStateInput()
         printf("Uknown game state\n");
         return ERROR;
     }
-    if(ERROR == gActive->handleInput(gConfig, gStates))
+    if(ERROR == gActive->handleInput(&gConfig, gStates))
     {
         printf("Error during input handling\n");
         return ERROR;
@@ -70,13 +69,6 @@ int handleStateInput()
 
 int initInstances()
 {
-    /* ----- CONFIG ----- */
-    if(NULL == (gConfig = new Config))
-    {
-        printf("Error initializing Config object\n");
-        return ERROR;
-    }
-
     /* ----- GAME ----- */
     if(NULL == (gGame = new Game))
     {
@@ -137,8 +129,8 @@ int createWindow()
     gWindow = SDL_CreateWindow(WINDOW_NAME,
                                SDL_WINDOWPOS_UNDEFINED,
                                SDL_WINDOWPOS_UNDEFINED,
-                               gConfig->screenWidth,
-                               gConfig->screenHeight,
+                               gConfig.screenWidth,
+                               gConfig.screenHeight,
                                SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 
     if(gWindow == NULL)
@@ -157,8 +149,13 @@ int createGLContext()
     {
         printf( "OpenGL context could not be created! SDL Error: %s\n", SDL_GetError() );
         return ERROR;
-    }/*else return SUCCESS;*/
+    }
 
+    return SUCCESS;
+}
+
+int initGLEW()
+{
     glewExperimental= true;
     GLenum err=glewInit();
     if(err!=GLEW_OK)
@@ -181,7 +178,6 @@ int enableVsync()
 
 int cleanup()
 {
-    delete gConfig;
     delete gGame;
     SDL_DestroyWindow(gWindow);
     SDL_Quit();
