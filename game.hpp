@@ -11,6 +11,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "shader_program.hpp"
+#include "perspective_cam.hpp"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ public:
     int render();
     int handleInput(Config* config, vector<Drawable*> states);
     Ball ball;
+    PerspectiveCamera camera;
 };
 
 #endif
