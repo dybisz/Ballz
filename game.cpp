@@ -15,18 +15,9 @@ Game::~Game()
  */
 int Game::render()
 {
-    // !!! TEMPORARY CRAP FOR TESTING
-    // !!!
-
-    //Clear color buffer
-    glClear(GL_COLOR_BUFFER_BIT);
-    //Render quad
-    glBegin(GL_QUADS);
-    glVertex2f( -0.5f, -0.5f );
-    glVertex2f( 0.5f, -0.5f );
-    glVertex2f( 0.5f, 0.5f );
-    glVertex2f( -0.5f, 0.5f );
-    glEnd();
+    ball.setView(devCamera.getView());
+    ball.setProjection(devCamera.getProjection());
+    ball.render();
 
     return SUCCESS;
 }

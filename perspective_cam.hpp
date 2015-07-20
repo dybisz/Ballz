@@ -16,7 +16,8 @@ private:
 public:
     PerspectiveCamera();
     ~PerspectiveCamera();
-
+    glm::mat4 getProjection();
+    glm::mat4 getView();
 };
 
 #endif

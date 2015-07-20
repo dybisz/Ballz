@@ -133,7 +133,7 @@ void Shader::compile(GLuint shaderID, string source)
 
     /* ----- COMPILATION CHECK ----- */
     GLint shaderCompiled = GL_FALSE;
-    getParam(shaderID, GL_COMPILE_STATUS, &shaderCompiled);
+    getShaderParam(shaderID, GL_COMPILE_STATUS, &shaderCompiled);
     if( shaderCompiled != GL_TRUE )
     {
         cout << "[Error] Unable to compile shader " << shaderID << '\n';
@@ -154,7 +154,7 @@ void Shader::printShaderLog(GLuint shader)
         int infoLogLength = 0;
         int maxLength = infoLogLength;
 
-        getParam(shader, GL_INFO_LOG_LENGTH, &maxLength );
+        getShaderParam(shader, GL_INFO_LOG_LENGTH, &maxLength );
 
         char* infoLog = new char[maxLength];
 

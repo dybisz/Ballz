@@ -11,6 +11,10 @@
 
 using namespace std;
 
+//TODO verbose mode, which (when turned on) will say smth like
+//TODO      "compiling [name] shader: complete", where [name] will be
+//TODO      loaded e.g. from first comment in shader source.
+
 class Shader
 {
 

@@ -1,7 +1,7 @@
 CC = g++
-L_FLAGS = -lSDL2 -lGL -lGLU -lGLEW #-lglm# -lglut -lGLU -lm
+L_FLAGS = -lSDL2 -lGL -lGLU -lGLEW -lm
 C_FLAGS = -Wall
-OBJ = main.o ball.o shader.o shader_program.o perspective_cam.o game.o main_menu.o gl_util.o
+OBJ = main.o buffer_object.o ball.o shader.o shader_program.o perspective_cam.o game.o main_menu.o gl_util.o
 
 .PHONY: game clean
 
@@ -14,6 +14,10 @@ ballz: ${OBJ}
 main.o: main.cpp
 	@echo "----- COMPILING main.o -----"
 	${CC} -o main.o -c main.cpp ${C_FLAGS}
+
+buffer_object.o: buffer_object.cpp
+	@echo "----- COMPILING buffer_object.o -----"
+	${CC} -o buffer_object.o -c buffer_object.cpp ${C_FLAGS}
 
 perspective_cam.o: perspective_cam.cpp
 	@echo "----- COMPILING perspective_cam.o -----"

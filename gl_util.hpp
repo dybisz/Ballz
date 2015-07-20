@@ -21,12 +21,12 @@ bool GL_error();
  * Prints out to stdout OpenGL version.
  */
 void GL_print_version();
-
+//TODO getProgramParam and switch it with glGetProgramiv in shader.cpp and shader_program.cpp
 /**
  * Wraps up glGetShaderiv() routine with error check. No throws -
  * error is just a suggestion that something went wrong.
  */
-void getParam(GLuint shader,  GLenum pname,  GLint *params);
+void getShaderParam(GLuint shader,  GLenum pname,  GLint *params);
 
 /**
  * Wraps up glGetShaderInfoLog() routine with error check. No throws -

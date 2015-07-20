@@ -24,7 +24,7 @@ public:
     int render();
     int handleInput(Config* config, vector<Drawable*> states);
     Ball ball;
-    PerspectiveCamera camera;
+    PerspectiveCamera devCamera;
 };
 
 #endif
