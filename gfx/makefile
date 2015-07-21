@@ -64,7 +64,7 @@ shader_program.o: ${SRC}shader_program.cpp
 	${CC} -o shader_program.o -c ${SRC}shader_program.cpp ${C_FLAGS}
 	
 copy:
-	mkdir ${BUILD}; mv *.o ${BUILD}
+	mkdir -p ${BUILD}; mv *.o ${BUILD}
 	
 clean:
 	rm ${BUILD}*.o
