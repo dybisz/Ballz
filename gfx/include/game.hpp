@@ -17,6 +17,10 @@ using namespace std;
 
 class Game: public Drawable
 {
+private:
+    static const float SCROLL_SPEED;
+    int lastClickedX;
+    int lastClickedY;
 public:
     Game();
     virtual ~Game();

@@ -3,7 +3,7 @@ INCLUDE = -I include/ -I include/glm/
 L_FLAGS = -lSDL2 -lGL -lGLU -lGLEW
 C_FLAGS = -Wall ${INCLUDE}
 OBJ = main.o game.o main_menu.o button.o point.o floating_window.o gl_util.o \
-	   buffer_object.o ball.o shader.o shader_program.o perspective_cam.o
+	   buffer_object.o ball.o shader.o shader_program.o perspective_cam.o terrain.o
 	   
 BUILD = build/
 SRC = src/
@@ -62,7 +62,11 @@ ball.o: ${SRC}ball.cpp
 shader_program.o: ${SRC}shader_program.cpp
 	@echo "----- COMPILING shader_program.o -----"
 	${CC} -o shader_program.o -c ${SRC}shader_program.cpp ${C_FLAGS}
-	
+
+terrain.o: ${SRC}terrain.cpp
+	@echo "----- COMPILING terrain.o -----"
+	${CC} -o terrain.o -c ${SRC}terrain.cpp ${C_FLAGS}
+
 copy:
 	mkdir -p ${BUILD}; mv *.o ${BUILD}
 	
