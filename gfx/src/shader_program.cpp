@@ -13,8 +13,9 @@ SetUniformMatEx     setUniformMatEx;
 const GLchar* ShaderProgram::UNIFORM_MODEL_MATRIX           = "uModel";
 const GLchar* ShaderProgram::UNIFORM_VIEW_MATRIX            = "uView";
 const GLchar* ShaderProgram::UNIFORM_PROJECTION_MATRIX      = "uProjection";
+const GLchar* ShaderProgram::UNIFORM_CAMERA_POSITION        = "uCamera";
 const GLchar* ShaderProgram::ATTRIBUTE_POSITION             = "aPosition";
-
+const GLchar* ShaderProgram::ATTRIBUTE_NORMAL               = "aNormal";
 
 ShaderProgram::ShaderProgram()
 {
@@ -255,6 +256,27 @@ void ShaderProgram::setProjectionMatrix(glm::mat4 projectionMatrix)
         return;
     }
 }
+//TODO error handling bitch
+/**
+ * Sets up approriate variable in the shader. All errors are handled - yeah right.
+ */
+void ShaderProgram::setCameraPosition(glm::vec3 cameraPosition)
+{
+    GLint _id = -1;
+    try {
+        _id = getUniform(UNIFORM_CAMERA_POSITION);
+    }catch(exception& e) {
+        printf("[Error] setCameraPosition() call\n");
+        return;
+    }
+    try {
+        glUniform3fv(_id, 1, &cameraPosition[0]);
+    } catch (exception& e) {
+        printf("[Error] setCameraPosition() call\n");
+        return;
+    }
+}
+
 //TODO comment
 //TODO error handling
 //TODO if aPosition not found - print "no aPosition pointer - is it correct shader source" or whatever
@@ -274,7 +296,22 @@ void ShaderProgram::setVertices(GLuint bufferID)
     );
     glEnableVertexAttribArray(aPosition);
 }
-
+//TODO comment
+//TODO error handling
+//TODO if aNormal not found - print "no aNormal pointer - is it correct shader source" or whatever
+void ShaderProgram::setNormals(GLuint bufferID)
+{
+    GLuint aNormal = glGetAttribLocation(programID, ATTRIBUTE_NORMAL);
+    glVertexAttribPointer(
+            aNormal,  // The attribute we want to configure
+            3,                            // size
+            GL_FLOAT,                     // type
+            GL_FALSE,                     // normalized?
+            0,                            // stride
+            (void*)0                      // array buffer offset
+    );
+    glEnableVertexAttribArray(aNormal);
+}
 /**
  * Handles errors for glGetUniformLocation call.
  */

@@ -93,3 +93,8 @@ void PerspectiveCamera::recalculateLookAt()
     lookAt  = glm::lookAt(glm::vec3(calculateX(),calculateY(),calculateZ()), glm::vec3(0,0,0),glm::vec3(0,1,0));
 }
 
+glm::vec3 PerspectiveCamera::getPosition()
+{
+    glm::vec3 position(calculateX(), calculateY(), calculateZ());
+    return position;
+}

@@ -19,6 +19,7 @@ int Game::render()
 {
     ball.setView(devCamera.getView());
     ball.setProjection(devCamera.getProjection());
+    ball.setCameraPosition(devCamera.getPosition());
     ball.render();
 
     return SUCCESS;

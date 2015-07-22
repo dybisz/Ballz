@@ -12,6 +12,7 @@
 /* ----- GLM ----- */
 #define GLM_FORCE_RADIANS
 #include <glm/mat4x4.hpp>
+#include <glm/vec3.hpp>
 
 using namespace std;
 
@@ -30,7 +31,9 @@ private:
     static const GLchar* UNIFORM_MODEL_MATRIX;
     static const GLchar* UNIFORM_VIEW_MATRIX;
     static const GLchar* UNIFORM_PROJECTION_MATRIX;
+    static const GLchar* UNIFORM_CAMERA_POSITION;
     static const GLchar* ATTRIBUTE_POSITION;
+    static const GLchar* ATTRIBUTE_NORMAL;
     void createProgram();
     void deleteProgram();
     void attachShader(GLuint);
@@ -45,7 +48,9 @@ public:
     void setModelMatrix(glm::mat4);
     void setViewMatrix(glm::mat4);
     void setProjectionMatrix(glm::mat4);
+    void setCameraPosition(glm::vec3);
     void setVertices(GLuint bufferID);
+    void setNormals(GLuint bufferID);
     void useProgram();
     void stopProgram();
 

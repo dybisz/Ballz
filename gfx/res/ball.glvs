@@ -1,9 +1,25 @@
 attribute vec3 aPosition;
+attribute vec3 aNormal;
+
 uniform mat4 uModel;
 uniform mat4 uView;
 uniform mat4 uProjection;
+uniform vec3 uCamera;
+
+varying vec3 vPosition;
+varying vec3 vNormal;
+varying vec3 vLightPosition;
+varying vec3 vCamera;
 
 void main()
 {
+    vec3 lightPosition = vec3(4.5f, 4.5f, -4.0f);
+
+    /* ----- SEND TO FRAGMENT SHADER ----- */
+    vPosition = vec3(uView * uModel * vec4(aPosition, 0.0));
+    vNormal   = vec3(uView * uModel * vec4(aNormal, 0.0));
+    vLightPosition = vec3(uView * vec4(lightPosition, 0.0));
+    vCamera = vec3(uView * uModel * vec4(uCamera,0.0f));
+
     gl_Position = uProjection * uView * uModel * vec4(aPosition, 1.0);
 }

@@ -31,6 +31,7 @@ public:
     glm::mat4 getView();
     void updatePosition(float, float);
     void updateRadius(float);
+    glm::vec3 getPosition();
 };
 
 #endif

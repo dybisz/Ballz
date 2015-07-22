@@ -31,18 +31,22 @@ private:
     static const int RINGS;
     static const int SECTORS;
     static const int DATA_PER_VERTEX;
+    static const int DATA_PER_NORMAL;
     static const int DATA_PER_QUAD;
     static const string FRAGMENT_SHADER_PATH;
     static const string VERTEX_SHADER_PATH;
-    void generateVertices(float);
+    void generateVerticesAndNormals(float);
     void generateIndices();
     glm::mat4 mModel;
     glm::mat4 mView;
     glm::mat4 mProjection;
+    glm::vec3 vCameraPosition;
     vector<GLfloat> vertices;
+    vector<GLfloat> normals;
     vector<GLuint> indices;
-    BufferObject vbo;
-    BufferObject indices_vbo;
+    BufferObject bVertices;
+    BufferObject bNormals;
+    BufferObject bIndices;
 
 public:
     Shader vertexShader;
@@ -50,6 +54,7 @@ public:
     ShaderProgram program;
     void setView(glm:: mat4);
     void setProjection(glm:: mat4);
+    void setCameraPosition(glm::vec3);
     int render();
     int handleInput(Config* config, vector<Drawable*> states);
 

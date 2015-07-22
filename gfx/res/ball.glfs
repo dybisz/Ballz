@@ -1,5 +1,35 @@
+varying vec3 vPosition;
+varying vec3 vNormal;
+varying vec3 vLightPosition;
+varying vec3 vCamera;
+
+//TODO material specificiation
+//TODO object color
+
 void main()
 {
-    // Setting Each Pixel To Red
-    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    /* ----- NORMALIZE ----- */
+    vec3 lightDirection = normalize(vLightPosition);
+    vec3 normalDirection = normalize(vNormal);
+    vec3 viewDirection = normalize(vCamera - vPosition);
+
+    /* ----- ATTENUATION ----- */
+    float distance = length(vLightPosition - vPosition);
+    float attenuation = (1.0 / (1.0 + (0.1 * distance * distance)));
+
+    /* ----- AMBIENT COMPONENT ----- */
+    vec3 ambientReflection = vec3(0.1);
+
+    /* ----- DIFFUSE COMPONENT ----- */
+    vec3 diffuseReflection = attenuation * vec3(max(0.0, dot(normalDirection, lightDirection)));
+
+    /* ----- SPECULAR COMPONENT ----- */
+    vec3 specularReflection = vec3(0.0, 0.0, 0.0);
+    if(dot(normalDirection, lightDirection) > 0.0) // light source on the right side
+    {
+      specularReflection =  attenuation * vec3(0.5) *
+      pow(max(0.0, dot(reflect(-lightDirection, normalDirection), -viewDirection)),50);
+    }
+
+    gl_FragColor =  vec4(0.7, 0.0, 0.7, 1.0) * vec4(ambientReflection + diffuseReflection + specularReflection, 1.0);
 }
