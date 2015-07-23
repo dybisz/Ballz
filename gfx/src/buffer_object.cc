@@ -1,4 +1,4 @@
-#include "buffer_object.hpp"
+#include "buffer_object.h"
 
 BufferObject::BufferObject()
 {

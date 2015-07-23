@@ -1,5 +1,5 @@
-#ifndef __MAIN__
-#define __MAIN__
+#ifndef GFX_INCLUDE_MAIN_H_
+#define GFX_INCLUDE_MAIN_H_
 
 #include <GL/glew.h>
 #include <iostream>
@@ -11,12 +11,12 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
-#include "ball.hpp"
-#include "game.hpp"
-#include "error_const.hpp"
-#include "gl_util.hpp"
-#include "config.hpp"
-#include "main_menu.hpp"
+#include "ball.h"
+#include "game.h"
+#include "error_const.h"
+#include "gl_util.h"
+#include "config.h"
+#include "main_menu.h"
 
 /* ----- GLM ----- */
 #define GLM_FORCE_RADIANS

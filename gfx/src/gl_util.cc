@@ -1,4 +1,4 @@
-#include "gl_util.hpp"
+#include "gl_util.h"
 
 bool GL_error()
 {
@@ -15,7 +15,7 @@ void GL_print_version()
 {
     printf("OpenGL version supported by this platform (%s): \n", glGetString(GL_VERSION));
 }
-//TODO getProgramParam and switch it with glGetProgramiv in shader.cpp and shader_program.cpp
+// TODO(dybisz) getProgramParam and switch it with glGetProgramiv in shader.cpp and shader_program.cpp
 void getShaderParam(GLuint shader,  GLenum pname,  GLint *params)
 {
     glGetShaderiv(shader, pname, params);

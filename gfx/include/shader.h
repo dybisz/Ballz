@@ -1,5 +1,5 @@
-#ifndef __SHADER__
-#define __SHADER__
+#ifndef GFX_INCLUDE_SHADER_H_
+#define GFX_INCLUDE_SHADER_H_
 
 #include <GL/glew.h>
 #include <GL/gl.h>
@@ -7,13 +7,13 @@
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
-#include "gl_util.hpp"
+#include "gl_util.h"
 
 using namespace std;
 
-//TODO verbose mode, which (when turned on) will say smth like
-//TODO      "compiling [name] shader: complete", where [name] will be
-//TODO      loaded e.g. from first comment in shader source.
+// TODO(dybisz) verbose mode, which (when turned on) will say smth like
+// TODO(dybisz) ... "compiling [name] shader: complete", where [name] will be
+// TODO(dybisz) ... loaded e.g. from first comment in shader source.
 
 class Shader
 {

@@ -1,4 +1,4 @@
-#include "perspective_cam.hpp"
+#include "perspective_cam.h"
 
 //const float PerspectiveCamera::SCROLL_SPEED = 80;
 
@@ -7,7 +7,7 @@ PerspectiveCamera::PerspectiveCamera()
     theta       = 45;
     phi         = 5;
     radius      = 25;
-    projection  = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.f);
+    projection  = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 1000.f);
     lookAt      = glm::lookAt(glm::vec3(calculateX(),calculateY(),calculateZ()), glm::vec3(0,0,0),glm::vec3(0,1,0));
 
 }
@@ -17,8 +17,7 @@ PerspectiveCamera::~PerspectiveCamera()
 
 }
 
-//TODO CLAMP / MAX/ MIN functions in #define form
-
+// TODO(dybisz) CLAMP / MAX/ MIN functions in #define form
 /**
  * Providing change on X and Y axis, camera will recalculate its position
  * by modifying lookAt matrix.

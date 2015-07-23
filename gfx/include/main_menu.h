@@ -1,15 +1,15 @@
-#ifndef __MAIN_MENU__
-#define __MAIN_MENU__
+#ifndef GFX_INCLUDE_MAIN_MENU_H_
+#define GFX_INCLUDE_MAIN_MENU_H_
 
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <SDL2/SDL.h>
 #include <vector>
-#include "drawable.hpp"
-#include "error_const.hpp"
-#include "config.hpp"
-#include "button.hpp"
-#include "floating_window.hpp"
+#include "drawable.h"
+#include "error_const.h"
+#include "config.h"
+#include "button.h"
+#include "floating_window.h"
 #include <string>
 
 using namespace std;

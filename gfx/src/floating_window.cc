@@ -1,4 +1,4 @@
-#include "floating_window.hpp"
+#include "floating_window.h"
 
 FloatingWindow::FloatingWindow(float width, float height,Config* config) {
     leftTop = new Point(width/2*(-1.0f),height/2*(-1.0f));

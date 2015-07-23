@@ -1,17 +1,17 @@
-#ifndef __GAME__
-#define __GAME__
+#ifndef GFX_INCLUDE_GAME_H_
+#define GFX_INCLIDE_GAME_H_
 
 
 #include <SDL2/SDL.h>
 #include <vector>
-#include "drawable.hpp"
-#include "error_const.hpp"
-#include "config.hpp"
-#include "ball.hpp"
+#include "drawable.h"
+#include "error_const.h"
+#include "config.h"
+#include "ball.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "shader_program.hpp"
-#include "perspective_cam.hpp"
+#include "shader_program.h"
+#include "perspective_cam.h"
 
 using namespace std;
 

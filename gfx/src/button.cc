@@ -1,4 +1,4 @@
-#include "button.hpp"
+#include "button.h"
 
 Button::Button(std::string content, float xPos, float yPos, float width, float height,Config* config) {
     leftTop = new Point(xPos,yPos);

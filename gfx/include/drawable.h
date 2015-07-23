@@ -1,8 +1,8 @@
-#ifndef __DRAWABLE__
-#define __DRAWABLE__
+#ifndef GFX_INCLUDE_DRAWABLE_H_
+#define GFX_INCLUDE_DRAWABLE_H_
 
 #include <vector>
-#include "config.hpp"
+#include "config.h"
 
 class Drawable
 {

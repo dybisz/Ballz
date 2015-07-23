@@ -2,7 +2,7 @@ SUBDIRS = gfx/ network/
 
 all: $(SUBDIRS)
 
-# TODO learn options: @
+# TODO(ciecier) learn options: @
 $(SUBDIRS):
 	$(MAKE) -C $@
 

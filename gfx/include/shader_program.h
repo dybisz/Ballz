@@ -1,5 +1,5 @@
-#ifndef __SHADER_PROGRAM__
-#define __SHADER_PROGRAM__
+#ifndef GFX_INCLUDE_SHADER_PROGRAM_H_
+#define GFX_INCLUDE_SHADER_PROGRAM_H_
 
 #include <GL/glew.h>
 #include <GL/gl.h>
@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
-#include "gl_util.hpp"
+#include "gl_util.h"
 
 /* ----- GLM ----- */
 #define GLM_FORCE_RADIANS
@@ -16,14 +16,14 @@
 
 using namespace std;
 
-//TODO program as a pointer to check if it has been created or not
+// TODO(dybisz) program as a pointer to check if it has been created or not
 
-//TODO createProgram call only when it is needed i.e. attachShaders or useProgram etc.
-//TODO      This will prevent creating n programs for e.g. n balls when balls will
-//TODO      be rendered using 1 external program.
+// TODO(dybisz) createProgram call only when it is needed i.e. attachShaders or useProgram etc.
+// TODO(dybisz) ... This will prevent creating n programs for e.g. n balls when balls will
+// TODO(dybisz) ... be rendered using 1 external program.
 
-//TODO Decide if all (or most) possible shaders would use standard variables for
-//TODO      uModel, uView, uProjection, aPosition, vColor etc.
+// TODO(dybisz) Decide if all (or most) possible shaders would use standard variables for
+// TODO(dybisz) ... uModel, uView, uProjection, aPosition, vColor etc.
 
 class ShaderProgram
 {
@@ -34,16 +34,27 @@ private:
     static const GLchar* UNIFORM_CAMERA_POSITION;
     static const GLchar* ATTRIBUTE_POSITION;
     static const GLchar* ATTRIBUTE_NORMAL;
-    void createProgram();
-    void deleteProgram();
-    void attachShader(GLuint);
-    void linkProgram();
-    void printProgramLog(GLuint);
-    GLuint getUniform(const GLchar*);
-    void setUniformMatrix(GLint,GLsizei,GLboolean,const GLfloat*);
+    /**
+    * Method calls glCreateProgram() and throws appropriate exception when needed.
+    */
+    void _createProgram();
+
+    /**
+    * Calls glDeleteProgram and check for errors.
+    */
+    void _deleteProgram();
+    void _attachShader(GLuint);
+    void _linkProgram();
+    void _useProgram();
+    void _printProgramLog(GLuint);
+    GLuint _getUniform(const GLchar*);
+    void _setUniformMatrix(GLint,GLsizei,GLboolean,const GLfloat*);
 
 public:
     GLuint programID;
+    /**
+    * Attaches provided shaders to the program and links it.
+    */
     void attachShaders(GLuint, GLuint);
     void setModelMatrix(glm::mat4);
     void setViewMatrix(glm::mat4);

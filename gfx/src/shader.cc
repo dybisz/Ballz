@@ -1,4 +1,4 @@
-#include "shader.hpp"
+#include "shader.h"
 
 /* ----- EXCEPTIONS ----- */
 CreateShdEx         createShdEx;
@@ -24,7 +24,7 @@ Shader::~Shader()
 /**
  * Loads shader from file and in case of success, returns its newly
  * generated ID.
- * Otherwise -1 is returned // TODO
+ * Otherwise -1 is returned // TODO(dybisz)
  */
 GLuint Shader::loadFromFile(string path, GLenum type)
 {

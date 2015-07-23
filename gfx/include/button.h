@@ -1,14 +1,14 @@
-#ifndef __BUTTON__
-#define __BUTTON__
+#ifndef GFX_INCLUDE_BUTTON_H_
+#define GFX_INCLUDE_BUTTON_H_
 
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <SDL2/SDL.h>
 #include <vector>
-#include "drawable.hpp"
-#include "error_const.hpp"
-#include "config.hpp"
-#include "point.hpp"
+#include "drawable.h"
+#include "error_const.h"
+#include "config.h"
+#include "point.h"
 #include <string>
 
 #define BUTTON_DEPTH_NOT_PRESSED 0.0

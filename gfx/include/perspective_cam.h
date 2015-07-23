@@ -1,5 +1,5 @@
-#ifndef __CAMERA__
-#define __CAMERA__
+#ifndef GFX_INCLUDE_PERSPECTIVE_CAMERA_H_
+#define GFX_INCLUDE_PERSPECTIVE_CAMERA_H_
 
 #define PI 3.14159265
 #include <math.h>

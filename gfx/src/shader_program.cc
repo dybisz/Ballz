@@ -1,4 +1,4 @@
-#include "shader_program.hpp"
+#include "shader_program.h"
 
 /* ----- EXCEPTIONS ----- */
 CreateProgEx        createProgEx;
@@ -17,11 +17,12 @@ const GLchar* ShaderProgram::UNIFORM_CAMERA_POSITION        = "uCamera";
 const GLchar* ShaderProgram::ATTRIBUTE_POSITION             = "aPosition";
 const GLchar* ShaderProgram::ATTRIBUTE_NORMAL               = "aNormal";
 
+/* ----- PUBLIC METHODS ----- */
 ShaderProgram::ShaderProgram()
 {
     /* ----- CREATE PROGRAM ----- */
     try {
-        createProgram();
+        _createProgram();
     } catch(exception& e) {
         cout << e.what() << '\n';
     }
@@ -30,38 +31,32 @@ ShaderProgram::ShaderProgram()
 ShaderProgram::~ShaderProgram()
 {
     try {
-        deleteProgram();
+        _deleteProgram();
     } catch(exception& e) {
         cout << e.what() << '\n';
     }
 }
 
-/**
- * Attaches provided shaders to the program and links it.
- */
 void ShaderProgram::attachShaders(GLuint vertexShader, GLuint fragmentShader)
 {
     /* ----- ATTACH SHADERS ----- */
     try{
-        attachShader(vertexShader);
-        attachShader(fragmentShader);
+        _attachShader(vertexShader);
+        _attachShader(fragmentShader);
     } catch(exception& e) {
         cout << e.what() << '\n';
     }
 
     /* ----- LINK PROGRAM ----- */
     try {
-        linkProgram();
+        _linkProgram();
     } catch(exception& e) {
         cout << e.what() << '\n';
-;    }
+    }
 
 }
-
-/**
- * Method calls glCreateProgram() and throws appropriate exception when needed.
- */
-void ShaderProgram::createProgram()
+/* ----- PRIVATE METHODS ----- */
+void ShaderProgram::_createProgram()
 {
     programID = glCreateProgram();
     if(GL_INVALID_OPERATION == glGetError())
@@ -72,10 +67,8 @@ void ShaderProgram::createProgram()
     }
 }
 
-/**
- * Calls glDeleteProgram and check for errors.
- */
-void ShaderProgram::deleteProgram()
+
+void ShaderProgram::_deleteProgram()
 {
     glDeleteProgram(programID);
 
@@ -89,7 +82,7 @@ void ShaderProgram::deleteProgram()
 /**
  * Calls glAttachShader and checks for every possible error.
  */
-void ShaderProgram::attachShader(GLuint shaderID)
+void ShaderProgram::_attachShader(GLuint shaderID)
 {
     glAttachShader(programID,shaderID);
 
@@ -114,7 +107,7 @@ void ShaderProgram::attachShader(GLuint shaderID)
  * If everything is correct, log of the linking process is displayd,
  * if not - appropriate LinkProgrEx is thrown.
  */
-void ShaderProgram::linkProgram()
+void ShaderProgram::_linkProgram()
 {
     glLinkProgram(programID);
 
@@ -138,7 +131,7 @@ void ShaderProgram::linkProgram()
     if( programSuccess != GL_TRUE )
     {
         printf( "[Error] Linking program %d!\n", programID );
-        printProgramLog( programID );
+        _printProgramLog( programID );
         throw linkShdEx;
     }
 
@@ -151,7 +144,7 @@ void ShaderProgram::linkProgram()
  * Prints on stdout log of provided program. ALl possible errors are handled
  * and if any occurred, appropriate exception is thrown.
  */
-void ShaderProgram::printProgramLog(GLuint programID)
+void ShaderProgram::_printProgramLog(GLuint programID)
 {
     if(glIsProgram(programID))
     {
@@ -177,7 +170,7 @@ void ShaderProgram::printProgramLog(GLuint programID)
         throw logProgEx;
     }
 }
-//TODO error check
+// TODO(dybisz) error check
 /**
  * Sets the program as a currently used.
  */
@@ -188,7 +181,7 @@ void ShaderProgram::useProgram()
     glValidateProgram(programID);
     if(GL_INVALID_VALUE == glGetError()) printf("macki Boga\n");
 }
-//TODO error check
+// TODO(dybisz) error check
 /**
  * Prevents OpenGL from using this program.
  */
@@ -204,13 +197,13 @@ void ShaderProgram::setModelMatrix(glm::mat4 modelMatrix)
 {
     GLint _id = -1;
     try {
-        _id = getUniform(UNIFORM_MODEL_MATRIX);
+        _id = _getUniform(UNIFORM_MODEL_MATRIX);
     }catch(exception& e) {
         printf("[Error] setModelMatrix() call\n");
         return;
     }
     try {
-        setUniformMatrix(_id, 1, GL_FALSE, &modelMatrix[0][0]);
+        _setUniformMatrix(_id, 1, GL_FALSE, &modelMatrix[0][0]);
     } catch (exception& e) {
         printf("[Error] setModelMatrix() call\n");
         return;
@@ -224,13 +217,13 @@ void ShaderProgram::setViewMatrix(glm::mat4 viewMatrix)
 {
     GLint _id = -1;
     try {
-        _id = getUniform(UNIFORM_VIEW_MATRIX);
+        _id = _getUniform(UNIFORM_VIEW_MATRIX);
     }catch(exception& e) {
         printf("[Error] setViewMatrix() call\n");
         return;
     }
     try {
-        setUniformMatrix(_id, 1, GL_FALSE, &viewMatrix[0][0]);
+        _setUniformMatrix(_id, 1, GL_FALSE, &viewMatrix[0][0]);
     } catch (exception& e) {
         printf("[Error] setViewMatrix() call\n");
         return;
@@ -244,19 +237,19 @@ void ShaderProgram::setProjectionMatrix(glm::mat4 projectionMatrix)
 {
     GLint _id = -1;
     try {
-        _id = getUniform(UNIFORM_PROJECTION_MATRIX);
+        _id = _getUniform(UNIFORM_PROJECTION_MATRIX);
     }catch(exception& e) {
         printf("[Error] setProjectionMatrix() call\n");
         return;
     }
     try {
-        setUniformMatrix(_id, 1, GL_FALSE, &projectionMatrix[0][0]);
+        _setUniformMatrix(_id, 1, GL_FALSE, &projectionMatrix[0][0]);
     } catch (exception& e) {
         printf("[Error] setProjectionMatrix() call\n");
         return;
     }
 }
-//TODO error handling bitch
+// TODO(dybisz) error handling bitch
 /**
  * Sets up approriate variable in the shader. All errors are handled - yeah right.
  */
@@ -264,7 +257,7 @@ void ShaderProgram::setCameraPosition(glm::vec3 cameraPosition)
 {
     GLint _id = -1;
     try {
-        _id = getUniform(UNIFORM_CAMERA_POSITION);
+        _id = _getUniform(UNIFORM_CAMERA_POSITION);
     }catch(exception& e) {
         printf("[Error] setCameraPosition() call\n");
         return;
@@ -277,9 +270,9 @@ void ShaderProgram::setCameraPosition(glm::vec3 cameraPosition)
     }
 }
 
-//TODO comment
-//TODO error handling
-//TODO if aPosition not found - print "no aPosition pointer - is it correct shader source" or whatever
+// TODO(dybisz) comment
+// TODO(dybisz) error handling
+// TODO(dybisz) if aPosition not found - print "no aPosition pointer - is it correct shader source" or whatever
 
 void ShaderProgram::setVertices(GLuint bufferID)
 {
@@ -296,9 +289,9 @@ void ShaderProgram::setVertices(GLuint bufferID)
     );
     glEnableVertexAttribArray(aPosition);
 }
-//TODO comment
-//TODO error handling
-//TODO if aNormal not found - print "no aNormal pointer - is it correct shader source" or whatever
+// TODO(dybisz) comment
+// TODO(dybisz) error handling
+// TODO(dybisz) if aNormal not found - print "no aNormal pointer - is it correct shader source" or whatever
 void ShaderProgram::setNormals(GLuint bufferID)
 {
     GLuint aNormal = glGetAttribLocation(programID, ATTRIBUTE_NORMAL);
@@ -315,7 +308,7 @@ void ShaderProgram::setNormals(GLuint bufferID)
 /**
  * Handles errors for glGetUniformLocation call.
  */
-GLuint ShaderProgram::getUniform(const GLchar* name)
+GLuint ShaderProgram::_getUniform(const GLchar* name)
 {
     GLuint _id = glGetUniformLocation(programID, name);
 
@@ -337,7 +330,7 @@ GLuint ShaderProgram::getUniform(const GLchar* name)
 /**
  * Handles errors for glUniformMatrix4fv() call.
  */
-void ShaderProgram::setUniformMatrix(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)
+void ShaderProgram::_setUniformMatrix(GLint location, GLsizei count, GLboolean transpose, const GLfloat *value)
 {
     glUniformMatrix4fv(location, count, transpose, value);
 

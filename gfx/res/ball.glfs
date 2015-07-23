@@ -3,8 +3,8 @@ varying vec3 vNormal;
 varying vec3 vLightPosition;
 varying vec3 vCamera;
 
-//TODO material specificiation
-//TODO object color
+// TODO(dybisz) material specificiation
+// TODO(dybisz) object color
 
 void main()
 {

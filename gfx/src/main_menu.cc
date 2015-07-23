@@ -1,4 +1,4 @@
-#include "main_menu.hpp"
+#include "main_menu.h"
 
 GLdouble eyeX = 0, eyeY = 0, eyeZ = 0;
 GLdouble centerX = 0, centerY = 0, centerZ = 0;

@@ -1,4 +1,4 @@
-#include "game.hpp"
+#include "game.h"
 
 const float Game::SCROLL_SPEED = 3.5f;
 

@@ -1,5 +1,5 @@
-#ifndef __TERRAIN__
-#define __TERRAIN__
+#ifndef GFX_INCLUDE_TERRAIN_H_
+#define GFX_INCLUDE_TERRAIN_H_
 
 /* ----- GLM ----- */
 #define GLM_FORCE_RADIANS

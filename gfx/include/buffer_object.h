@@ -1,5 +1,5 @@
-#ifndef __BUFFER_OBJECT__
-#define __BUFFER_OBJECT__
+#ifndef GFX_INCLUDE_BUFFER_OBJECT_H_
+#define GFX_INCLUDE_BUFFER_OBJECT_H_
 #include <GL/glew.h>
 #include <stdio.h>
 /* ----- GLM ----- */
@@ -7,7 +7,7 @@
 #include <glm/vec3.hpp>
 #include <GL/gl.h>
 
-//TODO put set() functionality in the consturctor
+// TODO(dybisz) put set() functionality in the consturctor
 
 class BufferObject
 {

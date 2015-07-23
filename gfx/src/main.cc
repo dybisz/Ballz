@@ -1,9 +1,12 @@
-#include "main.hpp"
+#include "main.h"
 
-//TODO unit tests
-//TODO better function for error printing
-//TODO proper directory structure
-//TODO consider try/catch approach rather than ERROR/SUCCCESS
+// TODO(dybisz) unit tests
+// TODO(dybisz) better function for error printing
+// TODO(dybisz) proper directory structure
+// TODO(dybisz) consider try/catch approach rather than ERROR/SUCCCESS
+// TODO(dybisz) use asserts
+// TODO(dybisz) use namespaces
+// TODO(dybisz) legal notice and aouthor line
 
 int main(int argc, char* args[])
 {

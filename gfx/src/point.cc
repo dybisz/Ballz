@@ -1,4 +1,4 @@
-#include "point.hpp"
+#include "point.h"
 
 Point::Point(){
     this->x = 0.0f ;

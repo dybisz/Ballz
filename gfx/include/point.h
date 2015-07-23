@@ -1,5 +1,5 @@
-#ifndef __POINT__
-#define __POINT__
+#ifndef GFX_INCLUDE_POINT_H_
+#define GFX_INCLUDE_POINT_H_
 
 using namespace std;
 
