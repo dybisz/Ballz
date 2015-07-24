@@ -17,10 +17,19 @@ Game::~Game()
  */
 int Game::render()
 {
+    glEnable(GL_DEPTH_TEST);
+
+    /* ----- BALL ----- */
     ball.setView(devCamera.getView());
     ball.setProjection(devCamera.getProjection());
     ball.setCameraPosition(devCamera.getPosition());
     ball.render();
+
+    /* ----- TERRAIN ----- */
+    terrain_.setView(devCamera.getView());
+    terrain_.setProjection(devCamera.getProjection());
+    terrain_.setCameraPosition(devCamera.getPosition());
+    terrain_.render();
 
     return SUCCESS;
 }

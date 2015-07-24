@@ -12,6 +12,7 @@
 #include <GL/glu.h>
 #include "shader_program.h"
 #include "perspective_cam.h"
+#include "terrain.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ public:
     int render();
     int handleInput(Config* config, vector<Drawable*> states);
     Ball ball;
+    Terrain terrain_;
     PerspectiveCamera devCamera;
 };
 

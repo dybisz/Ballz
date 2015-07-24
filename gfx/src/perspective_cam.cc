@@ -6,7 +6,7 @@ PerspectiveCamera::PerspectiveCamera()
 {
     theta       = 45;
     phi         = 5;
-    radius      = 25;
+    radius      = 35;
     projection  = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 1000.f);
     lookAt      = glm::lookAt(glm::vec3(calculateX(),calculateY(),calculateZ()), glm::vec3(0,0,0),glm::vec3(0,1,0));
 

@@ -7,6 +7,7 @@
 // TODO(dybisz) use asserts
 // TODO(dybisz) use namespaces
 // TODO(dybisz) legal notice and aouthor line
+// TODO(dybisz) do something with GLEW in terms of including order
 
 int main(int argc, char* args[])
 {
