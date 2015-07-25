@@ -1,8 +1,8 @@
 #include "ball.h"
 
 /* ----- STATIC VARIABLES ----- */
-const int Ball::RINGS = 30;
-const int Ball::SECTORS = 30;
+const int Ball::RINGS = 20;
+const int Ball::SECTORS = 20;
 const int Ball::DATA_PER_VERTEX = 3;
 const int Ball::DATA_PER_NORMAL = 3;
 const int Ball::DATA_PER_QUAD = 4;
@@ -49,7 +49,8 @@ void Ball::setCameraPosition(glm::vec3 cameraPosition) {
  */
 int Ball::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     program.useProgram();
     program.setModelMatrix(mModel);

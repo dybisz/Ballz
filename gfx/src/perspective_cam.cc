@@ -27,8 +27,8 @@ void PerspectiveCamera::updatePosition(float deltaX, float deltaY)
     theta    += deltaX;
     phi      += deltaY;
 
-    phi = (phi > 180) ? 180 : phi;
-    phi = (phi < 0) ? 0 : phi;
+    //phi = (phi > 180) ? 180 : phi;
+    //phi = (phi < 0) ? 0 : phi;
 
     recalculateLookAt();
 }

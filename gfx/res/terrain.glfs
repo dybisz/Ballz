@@ -3,9 +3,6 @@ varying vec3 vNormal;
 varying vec3 vLightPosition;
 varying vec3 vCamera;
 
-// TODO(dybisz) material specificiation
-// TODO(dybisz) object color
-
 void main()
 {
     /* ----- NORMALIZE ----- */
@@ -23,13 +20,5 @@ void main()
     /* ----- DIFFUSE COMPONENT ----- */
     vec3 diffuseReflection = attenuation * vec3(max(0.0, dot(normalDirection, lightDirection)));
 
-    /* ----- SPECULAR COMPONENT ----- */
-    vec3 specularReflection = vec3(0.0, 0.0, 0.0);
-    if(dot(normalDirection, lightDirection) > 0.0) // light source on the right side
-    {
-      specularReflection =  attenuation * vec3(0.5) *
-      pow(max(0.0, dot(reflect(-lightDirection, normalDirection), -viewDirection)),50);
-    }
-
-    gl_FragColor =  vec4(0.2, 0.7, 0.5, 1.0) * vec4(ambientReflection + diffuseReflection + specularReflection, 1.0);
+    gl_FragColor =  vec4(0.7, 0.7, 0.7, 1.0) * vec4(ambientReflection + diffuseReflection, 1.0);
 }
