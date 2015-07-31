@@ -1,7 +1,6 @@
 #ifndef GFX_INCLUDE_MAIN_H_
 #define GFX_INCLUDE_MAIN_H_
 
-#include "timer.h"
 #include <GL/glew.h>
 #include <iostream>
 #include <SDL2/SDL.h>

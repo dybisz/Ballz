@@ -1,11 +1,11 @@
 CC = g++
 
-INCLUDE = -I include/ -I include/glm/ 
+INCLUDE = -I include/ -I include/glm/ -I include/SOIL/src
 L_FLAGS = -lSDL2 -lGL -lGLU -lGLEW -lglut -lSOIL
 C_FLAGS = -Wall ${INCLUDE} -std=c++1y
 
 OBJ = main.o game.o main_menu.o button.o point.o floating_window.o gl_util.o \
-	   buffer_object.o ball.o shader.o shader_program.o perspective_cam.o terrain.o timer.o \
+	   buffer_object.o ball.o shader.o shader_program.o perspective_cam.o terrain.o\
 	   text_box.o
 	   
 BUILD = build/
@@ -70,11 +70,7 @@ terrain.o: ${SRC}terrain.cc
 	@echo "----- COMPILING terrain.o -----"
 	${CC} -o terrain.o -c ${SRC}terrain.cc ${C_FLAGS}
 
-timer.o: ${SRC}timer.cc
-	@echo "----- COMPILING timer.o -----"
-	${CC} -o timer.o -c ${SRC}timer.cc ${C_FLAGS}
-
-text_box.o: ${SRC}timer.cc
+text_box.o: ${SRC}text_box.cc
 	@echo "----- COMPILING timer.o -----"
 	${CC} -o text_box.o -c ${SRC}text_box.cc ${C_FLAGS}
 

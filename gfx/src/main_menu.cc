@@ -18,13 +18,13 @@ MainMenu::MainMenu(Config* config, WindowContent* windowContent)
     buttonVector = new vector<Button*>();
     floatingWindowMap = new map<string,FloatingWindow*>();
 
-//    /*
-//     * Creating "START GAME BUTTON"
-//     */
-//    Button* startGameButton =  new Button("Start Game",0.1f*config->screenWidth,0.5f* config->screenHeight,0.15f*config->screenHeight,0.05f*config->screenHeight,this->config, this->windowContent);
-//    std::function<void(Config* config, WindowContent* windowContent)> startGame = [](Config* config, WindowContent* windowContent){windowContent->gActive = windowContent->gGame;};
-//    startGameButton->setButtonClick(startGame);
-//    buttonVector->push_back(startGameButton);
+    /*
+     * Creating "START GAME BUTTON"
+     */
+    Button* startGameButton =  new Button("Start Game",0.1f*config->screenWidth,0.5f* config->screenHeight,0.15f*config->screenHeight,0.05f*config->screenHeight,this->config, this->windowContent);
+    std::function<void(Config* config, WindowContent* windowContent)> startGame = [](Config* config, WindowContent* windowContent){windowContent->gActive = windowContent->gGame;};
+    startGameButton->setButtonClick(startGame);
+    buttonVector->push_back(startGameButton);
 
     /*
      * Function adding "createServerButton, createServerFloatingWindow etc..
