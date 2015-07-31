@@ -16,6 +16,8 @@
 #include "shader.h"
 #include "shader_program.h"
 #include <GL/gl.h>
+#include <GL/glu.h>
+#include <SOIL.h>
 
 // TODO(dybisz) loading from .png/.bmp
 // TODO(dybisz) default drawing from predefined mathematical functions
@@ -25,64 +27,57 @@
 
 class Terrain {
  public:
-    void setView(glm::mat4);
+  void setView(glm::mat4);
 
-    void setProjection(glm::mat4);
+   void setProjection(glm::mat4);
 
-    void setCameraPosition(glm::vec3);
+   void setCameraPosition(glm::vec3);
 
-    int render();
+   int render();
+
    Terrain();
 
   ~Terrain();
 
  private:
+  // Path to the fragment shader
+  static const string FRAGMENT_SHADER_PATH;
 
+  // Path to the vertex shader
+  static const string VERTEX_SHADER_PATH;
 
-  // Number of vertices per side. Used when constructing default terrain
-  static const int kSizePerSide;
+  // Number of indices along X axis
+  static const int TERRAIN_WIDTH;
 
-  //
-  static const float kMinPosition;
+  // Number of indices along Z axis
+  static const int TERRAIN_DEPTH;
 
-  //
-  static const float kPositionRange;
+  // Maximum height for scaling process
+  static const float TERRAIN_MAX_HEIGHT;
 
-  //
-  static const int kDataPerVertex;
+  //Number of information in each vertex
+  static const int DATA_PER_VERTEX;
 
-  //
-  static const int kDataPerNormal;
-
-  //
-  static const int kNumberStripsRequired;
-
-  //
-  static const int kNumDegensRequired;
-
-  //
-  static const int kVerticesPerStrip;
-
- // Holds information about vertices on CPU
-  std::vector <GLfloat> vertices_;
+  // Holds information about vertices on CPU
+  std::vector <GLfloat> _vertices;
 
   // Holds information about normals on CPU
-  std::vector <GLfloat> normals_;
+  std::vector <GLfloat> _normals;
 
   // Holds information about vertices order on CPU
-  std::vector <GLuint> indices_;
+  std::vector <GLuint> _indices;
 
   // Holds information about vertices in OpenGL buffer
-  BufferObject buffer_vertices_;
+  BufferObject _buffer_vertices;
 
   // Holds information about normals in OpenGL buffer
-  BufferObject buffer_normals_;
+  BufferObject _buffer_normals;
 
   // Holds information about indices in OpenGL buffer
-  BufferObject buffer_indices_;
+  BufferObject _buffer_indices;
 
   // Number of generated indices. Auxiliary variable.
-  int index_count_;
+  int _index_count;
 
   //
   glm::mat4 mModel;

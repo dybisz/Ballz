@@ -1,7 +1,9 @@
 CC = g++
+
 INCLUDE = -I include/ -I include/glm/ 
-L_FLAGS = -lSDL2 -lGL -lGLU -lGLEW -lglut -lSDL_ttf
+L_FLAGS = -lSDL2 -lGL -lGLU -lGLEW -lglut -lSOIL
 C_FLAGS = -Wall ${INCLUDE} -std=c++1y
+
 OBJ = main.o game.o main_menu.o button.o point.o floating_window.o gl_util.o \
 	   buffer_object.o ball.o shader.o shader_program.o perspective_cam.o terrain.o timer.o \
 	   text_box.o

@@ -1,5 +1,4 @@
 attribute vec3 aPosition;
-attribute vec3 aNormal;
 
 uniform mat4 uModel;
 uniform mat4 uView;
@@ -11,15 +10,45 @@ varying vec3 vNormal;
 varying vec3 vLightPosition;
 varying vec3 vCamera;
 
+uniform sampler2D heightMapTexture;
+uniform float scale;
+
 void main()
 {
-    vec3 lightPosition = vec3(4.5f, 4.5f, -4.0f);
+    /* ----- TERRAIN SETTINGS ----- */
+    vec3 LIGHT_POSITION = vec3(4.5f, 4.5f, -4.0f);
+    float VERTICES_X = 50.0f;
+    float VERTICES_Z = 50.0f;
+    float SIZE = 100.0f;
+    float SCALE = 10.0f;
+    /* ----- ---------------- ----- */
 
-    /* ----- SEND TO FRAGMENT SHADER ----- */
-    vPosition = vec3(uView * uModel * vec4(aPosition, 0.0));
-    vNormal   = vec3(uView * uModel * vec4(aNormal, 0.0));
-    vLightPosition = vec3(uView * vec4(lightPosition, 0.0));
-    vCamera = vec3(uView * uModel * vec4(uCamera,0.0f));
+    float height = texture2D(heightMapTexture, aPosition.xz).r * SCALE;
+    vec3 position = aPosition * SIZE;
 
-    gl_Position = uProjection * uView * uModel * vec4(aPosition, 1.0);
+    /* ----- NORMAL CALCULATION ----- */
+    float d_z = position.z - 1.0f/VERTICES_Z;
+    float d_x = position.x - 1.0f/VERTICES_X;
+    if(d_z < 0.0f)
+    {
+        d_z = 0.0f;
+    }
+    if(d_x < 0.0f)
+    {
+        d_x = 0.0f;
+    }
+    vec3 a_N = vec3(position.x, 0, d_z);
+    vec3 b_N = vec3(d_x, 0, position.z);
+    float height_a_N = texture2D(heightMapTexture, a_N.xz).r * SCALE;
+    float height_b_N = texture2D(heightMapTexture, b_N.xz).r * SCALE;
+    vec3 N = cross(b_N, a_N);
+    /* ----- ------------------ ----- */
+
+    /* ----- PASS VALUES TO FRAGMENT SHADER ----- */
+    vNormal = N;
+    vLightPosition = LIGHT_POSITION;
+    vPosition = position;
+    /* ----- ------------------------------ ----- */
+
+    gl_Position = uProjection * uView * uModel * vec4(position.x, height, position.z, 1.0);
 }

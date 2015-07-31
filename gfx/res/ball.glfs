@@ -28,7 +28,7 @@ void main()
     if(dot(normalDirection, lightDirection) > 0.0) // light source on the right side
     {
       specularReflection =  attenuation * vec3(0.5) *
-      pow(max(0.0, dot(reflect(-lightDirection, normalDirection), -viewDirection)),50);
+      pow(max(0.0, dot(reflect(-lightDirection, normalDirection), -viewDirection)), 50);
     }
 
     gl_FragColor =  vec4(0.7, 0.0, 0.7, 1.0) * vec4(ambientReflection + diffuseReflection + specularReflection, 1.0);
