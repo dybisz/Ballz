@@ -1,5 +1,4 @@
 #include "main.h"
-
 // TODO(dybisz) unit tests
 // TODO(dybisz) better function for error printing
 // TODO(dybisz) proper directory structure
@@ -11,6 +10,7 @@
 
 int main(int argc, char* args[])
 {
+    glutInit(&argc, args);
     if(ERROR == initSDL())          return EXIT_FAILURE;
     if(ERROR == createWindow())     return EXIT_FAILURE;
     if(ERROR == createGLContext())  return EXIT_FAILURE;
@@ -25,9 +25,36 @@ int main(int argc, char* args[])
 
 int gameLoop()
 {
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+    glViewport(0, 0, gConfig.screenWidth, gConfig.screenHeight);
+    /* ----- SET PROJECTION ----- */
+    glMatrixMode(GL_PROJECTION);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    //gluPerspective(90.0f, (GLfloat) config->screenWidth/(GLfloat)config->screenHeight, 1.0f, 1000.0f);
+    glOrtho(0.0f, gConfig.screenWidth, gConfig.screenHeight, 0.0f, -5.0f, 10.0f);
+    glMatrixMode(GL_MODELVIEW); //set modelview matrix
+    glLoadIdentity(); //reset modelview matrix
+
+    float frameCount;
+    int currentTime;
+    int previousTime = glutGet(GLUT_ELAPSED_TIME);
+    int fps;
+
     SDL_StartTextInput();
     while(gConfig.running)
     {
+         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+         glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        showFPS(fps);
+
+
         /* ----- KEY HANDLING ----- */
         if(ERROR == handleStateInput()) return ERROR;
 
@@ -36,7 +63,29 @@ int gameLoop()
 
         /* ----- SDL REFRESH ----- */
         SDL_GL_SwapWindow(gWindow);
+        //  Increase frame count
+        frameCount++;
+
+        //  Get the number of milliseconds since glutInit called
+        //  (or first call to glutGet(GLUT ELAPSED TIME)).
+        currentTime = glutGet(GLUT_ELAPSED_TIME);
+
+        //  Calculate time passed
+        int timeInterval = currentTime - previousTime;
+
+        if (timeInterval > 1000)
+        {
+            //  calculate the number of frames per second
+            fps = frameCount / (timeInterval / 1000.0f);
+
+            //  Set time
+            previousTime = currentTime;
+
+            //  Reset frame count
+            frameCount = 0;
+        }
     }
+
 
     SDL_StopTextInput();
     return SUCCESS;
@@ -44,12 +93,12 @@ int gameLoop()
 
 int renderState()
 {
-    if(NULL == gActive)
+    if(NULL == windowContent->gActive)
     {
-        printf("Uknown game state\n");
+        printf("Uknown game state 2\n");
         return ERROR;
     }
-    if(ERROR == gActive->render())
+    if(ERROR == windowContent->gActive->render())
     {
         printf("Error during rendering\n");
         return ERROR;
@@ -59,11 +108,11 @@ int renderState()
 
 int handleStateInput()
 {
-    if(NULL == gActive) {
-        printf("Uknown game state\n");
+    if(NULL == windowContent->gActive) {
+        printf("Uknown game state 1\n");
         return ERROR;
     }
-    if(ERROR == gActive->handleInput(&gConfig, gStates))
+    if(ERROR == windowContent->gActive->handleInput(&gConfig, gStates))
     {
         printf("Error during input handling\n");
         return ERROR;
@@ -73,25 +122,33 @@ int handleStateInput()
 
 int initInstances()
 {
+    /* ----- STATE STORAGE ----- */
+
+    if(NULL == (windowContent = new WindowContent))
+    {
+        printf("Error initializing Game object (WindowContent)\n");
+        return ERROR;
+    }
+
     /* ----- GAME ----- */
-    if(NULL == (gGame = new Game))
+    if(NULL == (windowContent->gGame = new Game))
     {
         printf("Error initializing Game object\n");
         return ERROR;
     }
-    gStates.push_back(gGame);
+    //gStates.push_back(gGame);
 
     /* ----- MAIN MENU ----- */
-    if(NULL == (gMainMenu = new MainMenu))
+    if(NULL == (windowContent->gMainMenu = new MainMenu(&gConfig,windowContent)))
     {
         printf("Error initializing Game object\n");
         return ERROR;
     }
-    gStates.push_back(gMainMenu);
+    //gStates.push_back(gMainMenu);
 
     /* ----- ACTIVE ----- */
-    gActive = gGame;
-
+    //gActive = gMainMenu;
+    windowContent->gActive = windowContent->gMainMenu;
     return SUCCESS;
 }
 
@@ -135,7 +192,8 @@ int createWindow()
                                SDL_WINDOWPOS_UNDEFINED,
                                gConfig.screenWidth,
                                gConfig.screenHeight,
-                               SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+                               SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_BORDERLESS |SDL_WINDOW_FULLSCREEN);
+
 
     if(gWindow == NULL)
     {
@@ -187,3 +245,38 @@ int cleanup()
     SDL_Quit();
     return SUCCESS;
 }
+
+void showFPS(int fps){
+    string tmp; // brzydkie rozwiązanie
+    sprintf((char*)tmp.c_str(), "%d", fps);
+    string str = tmp.c_str();
+        float scalingFactor = 50/80;
+        float widthSum=0;
+        float heightSum = glutStrokeHeight(GLUT_STROKE_ROMAN);
+        for (string::iterator i = str.begin(); i != str.end(); ++i)
+        {
+            char c = *i;
+            widthSum += glutStrokeWidth(GLUT_STROKE_ROMAN,c);
+        }
+
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+        glLoadIdentity();
+        glRotatef(180.0,0,1,0);
+        glRotatef(180.0, 0,0,1);
+        glTranslatef(/*widthSum*scalingFactor*/0,-heightSum/**scalingFactor*/,0);
+       // glScalef(scalingFactor,scalingFactor,scalingFactor);
+        glColor3f(1.0f, 1.0f, 1.0f); // Green
+        glEnable(GL_LINE_SMOOTH);
+        glLineWidth(5.0);   // 2.0 gives good results.
+
+        for (string::iterator i = str.begin(); i != str.end(); ++i)
+        {
+            char c = *i;
+            glutStrokeCharacter(GLUT_STROKE_ROMAN,c);
+        }
+        glMatrixMode(GL_MODELVIEW);
+        glPopMatrix();
+
+}
+

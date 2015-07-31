@@ -10,7 +10,8 @@
 #include "config.h"
 #include "point.h"
 #include <string>
-
+#include <button.h>
+#include "text_box.h"
 using namespace std;
 
 class FloatingWindow{
@@ -21,7 +22,8 @@ public:
     Point *leftTop,*leftBottom,*rightTop,*rightBottom;
     Config* config;
     float topBarHeight;
-
+    vector<Button*>* buttonVector = NULL;
+    vector<TextBox*>* textBoxVector = NULL;
     /*
      * window movement
      */
@@ -37,6 +39,12 @@ public:
      */
     void handle_events(SDL_Event* event);
     void draw();
+
+    void addChild(Button* button);
+    void addChild(TextBox* textBox);
+
+    void moveChild(Button* button, float x, float y);
+    void moveChild(TextBox* textBox, float x, float y);
 };
 
 #endif

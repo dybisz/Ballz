@@ -1,13 +1,12 @@
 #ifndef GFX_INCLUDE_CONFIG_HPP_
 #define GFX_INCLUDE_CONFIG_HPP_
 
-#include "drawable.h"
 
 class Config {
 public:
     Config() {
-        screenWidth = 800;
-        screenHeight = 600;
+        screenWidth = 1440;
+        screenHeight = 900;
         running = true;
     }
 

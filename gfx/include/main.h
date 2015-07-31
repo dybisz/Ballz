@@ -1,12 +1,14 @@
 #ifndef GFX_INCLUDE_MAIN_H_
 #define GFX_INCLUDE_MAIN_H_
 
+#include "timer.h"
 #include <GL/glew.h>
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <GL/freeglut.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -17,6 +19,8 @@
 #include "gl_util.h"
 #include "config.h"
 #include "main_menu.h"
+#include "window_content.h"
+
 
 /* ----- GLM ----- */
 #define GLM_FORCE_RADIANS
@@ -70,6 +74,12 @@ vector<Drawable*> gStates;
  * Points to current states in which the game is.
  */
 Drawable* gActive = NULL;
+
+/*
+ *  Holds all available states of the game, content of main window, etc.
+ */
+
+WindowContent* windowContent = NULL;
 
 /**
  * Main loop of the game. Every event and rendering routine is called here.
@@ -131,5 +141,9 @@ int enableVsync();
  * will be handled by this procedure.
  */
 int cleanup();
+
+void showFPS(int fps);
+
+double clockToMilliseconds(clock_t ticks);
 
 #endif

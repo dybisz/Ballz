@@ -1,9 +1,10 @@
 CC = g++
-INCLUDE = -I include/ -I include/glm/
-L_FLAGS = -lSDL2 -lGL -lGLU -lGLEW
-C_FLAGS = -Wall ${INCLUDE}
+INCLUDE = -I include/ -I include/glm/ 
+L_FLAGS = -lSDL2 -lGL -lGLU -lGLEW -lglut -lSDL_ttf
+C_FLAGS = -Wall ${INCLUDE} -std=c++1y
 OBJ = main.o game.o main_menu.o button.o point.o floating_window.o gl_util.o \
-	   buffer_object.o ball.o shader.o shader_program.o perspective_cam.o terrain.o
+	   buffer_object.o ball.o shader.o shader_program.o perspective_cam.o terrain.o timer.o \
+	   text_box.o
 	   
 BUILD = build/
 SRC = src/
@@ -66,6 +67,15 @@ shader_program.o: ${SRC}shader_program.cc
 terrain.o: ${SRC}terrain.cc
 	@echo "----- COMPILING terrain.o -----"
 	${CC} -o terrain.o -c ${SRC}terrain.cc ${C_FLAGS}
+
+timer.o: ${SRC}timer.cc
+	@echo "----- COMPILING timer.o -----"
+	${CC} -o timer.o -c ${SRC}timer.cc ${C_FLAGS}
+
+text_box.o: ${SRC}timer.cc
+	@echo "----- COMPILING timer.o -----"
+	${CC} -o text_box.o -c ${SRC}text_box.cc ${C_FLAGS}
+
 
 copy:
 	mkdir -p ${BUILD}; mv *.o ${BUILD}
